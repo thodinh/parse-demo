@@ -1,5 +1,14 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h4 Welcome to the bookshelf online
+    hr
+    h5 List of books on bookshelf online 
+    ul
+        each value, index in results
+            li
+                div
+                    b 
+                        a(href='upload?id=#{value.id}') Book Title: #{value.get('title')}
+                div 
+                    i Author: #{value.get('author')}

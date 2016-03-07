@@ -4,7 +4,21 @@ var Parse = require('parse/node');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+    Parse.initialize('appId', 'javascriptKey', 'masterKey');
+    Parse.serverURL = 'http://localhost:3000/parse';
+    var Book = Parse.Object.extend('Book');
+    var query = new Parse.Query(Book);
+    query.find({
+        success: function(results) {
+            console.log('results of query');
+            console.log(results[0]);
+            res.render('index', { title: 'Bookshelf', results: results });
+        },
+        error: function(error) {
+            // error is an instance of Parse.Error.
+        }
+    });
+    // res.render('index', { title: 'Express' });
 });
 
 router.get('/about', function (req, res, next) {
@@ -34,7 +48,11 @@ router.post('/upload', function(req, res, next) {
        }
     });
     console.log(book);
-    res.render('upload', req.body);
-})
+    res.redirect('/');
+});
+
+router.get('/upload:id', function(req, res, next) {
+    res.redirect('/about');
+});
 
 module.exports = router;
