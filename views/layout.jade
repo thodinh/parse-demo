@@ -3,5 +3,41 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
   body
+    nav.navbar.navbar-default
+        div.container-fluit
+            div.navbar-header
+                button.navbar-toggle.collapsed(data-toggle='collapsed', data-target='#navbar')
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href='/') Home
+            div#navbar.navbar-collapse.collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href='/category') Category
+                    li
+                        a(href='/tags') Tags
+                    li
+                        a(href='/upload') Upload
+                form.navbar-form.navbar-left(action='/')
+                    div.input-group
+                        input.form-control(placeholder='Search books...')
+                        span.input-group-btn
+                            button.btn.btn-default Search
+                ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                        a.dropdown-toggle(href='#', data-toggle='dropdown') Register
+                            span.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='/login') Login
+                            li
+                                a(href='/setting') Setting
     block content
+    
+    script(src='/scripts/jquery.js')
+    script(src='/scripts/bootstrap.js')
+    script(src='/scripts/angular.js')
+    script(src='/scripts/app.js')

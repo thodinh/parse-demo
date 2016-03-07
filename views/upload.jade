@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    div
+        h4 Upload book into your library
+    form(action='upload' method='post')
+        div.form-group
+            label Title
+            input.form-control(placeholder='Book title', name='bookTitle', value=bookTitle)
+        div.form-group
+            label Author
+            input.form-control(placeholder='Author', name='author', value=author)
+        div.form-group
+            label Description
+            textarea.form-control(placeholder='Short description', name='description') #{description}
+        div.form-group
+            label Tags
+            input.form-control(placeholder='Tags, separate by comma', name='tags', value=tags)
+        div.form-group
+            label Thumbnail
+            input(type='file')
+        button.btn.btn-default.pull-right Upload        
