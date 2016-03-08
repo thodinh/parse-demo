@@ -11,6 +11,11 @@ block content
             label Author
             input.form-control(placeholder='Author', name='author', value=author)
         div.form-group
+            label Category
+            select.form-control
+                each val in categoryList
+                    option(value=val.id) #{val.get('name')}
+        div.form-group
             label Description
             textarea.form-control(placeholder='Short description', name='description') #{description}
         div.form-group

@@ -27,8 +27,7 @@ app.set('view engine', 'jade');
 
 var Parse = require('parse/node').Parse;
 Parse.initialize('appId', 'javascriptKey', 'masterKey');
-Parse.serverURL = 'http://localhost:3002/parse'
-Parse.Cloud.useMasterKey();
+Parse.serverURL = 'http://localhost:3000/parse'
 
 global.Parse = Parse;
 

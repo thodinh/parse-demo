@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    a.btn.btn-link(href='/category') Category
+    span New Category
+    hr
+    form(method='post')
+        div.form-group
+            label Name
+            input.form-control(placeholder='Category name', name='categoryName', value=categoryName)
+        div.form-group
+            label Description
+            textarea.form-control(placeholder='Category name', name='categoryDescription') #{categoryDescription}
+        button.btn.btn-default.pull-right Create
