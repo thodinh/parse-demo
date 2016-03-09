@@ -3,25 +3,33 @@ extends layout
 block content
     div
         h4 Upload book into your library
-    form(action='upload' method='post')
+    hr
+    form(action='upload' method='post' enctype="multipart/form-data")
         div.form-group
-            label Title
+            label Title *
             input.form-control(placeholder='Book title', name='bookTitle', value=bookTitle)
         div.form-group
-            label Author
+            label Author *
             input.form-control(placeholder='Author', name='author', value=author)
+        div.form-group 
+            label File (pdf, word, epub,...)
+            input(type='file', name='bookFile')
+        div.form-group
+            label Or Link
+            input.form-control(placeholder='Book\'s link', name='bookUrl')
         div.form-group
             label Category
-            select.form-control
+            select.form-control(name='categoryId')
                 each val in categoryList
                     option(value=val.id) #{val.get('name')}
+                option(value='0', selected) Others  
         div.form-group
             label Description
             textarea.form-control(placeholder='Short description', name='description') #{description}
         div.form-group
             label Tags
-            input.form-control(placeholder='Tags, separate by comma', name='tags', value=tags)
+            input.form-control(placeholder='Tags, separate by semi comma', name='tags', value=tags)
         div.form-group
             label Thumbnail
-            input(type='file')
+            input(type='file', name='thumbnail')
         button.btn.btn-default.pull-right Upload        

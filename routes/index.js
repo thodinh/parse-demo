@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
+var multer  = require('multer');
+var upload = multer({dest: './uploads/'});
+var configUpload = upload.fields([{ name: 'bookFile', maxCount: 1 }, { name: 'thumbnail', maxCount: 1 }]);
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var Book = Parse.Object.extend('Book');
@@ -33,25 +35,42 @@ router.get('/upload', function(req, res, next) {
     });
 });
 
-router.post('/upload', function(req, res, next) {
+router.post('/upload', configUpload, function(req, res, next) {
     var Book = Parse.Object.extend('Book');
-    var book = new Book();
-    if(req.body.bookTitle){
+    var book = new Book(); 
+    var bookFile = req.files['bookFile'][0];
+    var thumbnail = req.files['thumbnail'][0];
+    console.log(bookFile.filename);
+    if(req.body.bookTitle && req.body.author && ((bookFile && bookFile.filename) || req.body.bookUrl)){
         book.set('title', req.body.bookTitle);
         book.set('author', req.body.author);
         book.set('description', req.body.description);
-        book.set('tags', req.body.tags.split(','));
-        book.save(null, {
-        success: function(bookResult) {
-            console.log('Saved: ');
-            console.log(bookResult);
-        },
-        error: function(bookResult, error) {
-            console.log(error);
+        book.set('fileName', bookFile.filename);
+        book.set('originalname', bookFile.originalname);
+        book.set('mimetype', bookFile.mimetype);
+        book.set('bookUrl', req.body.bookUrl);
+        book.set('thumbnail', thumbnail.filename);
+        
+        if(req.body.categoryId)
+        {
+            var Category = Parse.Object.extend('Category');
+            var query = new Parse.Query(Category);
+            query.equalTo('_id', req.body.categoryId);
+            query.first().then(function(cat){
+                book.set('category', cat);
+                book.save(null, {
+                    success: function(bookResult) {
+                        console.log('Saved: ');
+                        console.log(bookResult);
+                    },
+                    error: function(bookResult, error) {
+                        console.log(error);
+                    }
+                });
+                console.log(book);                
+                res.redirect('/');
+            });
         }
-        });
-        console.log(book);
-        res.redirect('/');
     }
 });
 
@@ -93,6 +112,10 @@ router.post('/category/add', function(req, res, next) {
     }
     res.redirect('/category');
 });
+
+router.get('/file/:id', function(req, res, next) {
+    res.sendFile(__dirname + '/../uploads/' + req.params.id);
+})
 
 
 module.exports = router;

@@ -3,11 +3,24 @@ extends layout
 block content
     h4 Bookshelf online 
     hr
-    ul
+    ul.book-list.row
         each value, index in results
-            li
-                div
-                    b 
-                        a(href='upload/#{value.id}') Book Title: #{value.get('title')}
-                div 
-                    i Author: #{value.get('author')}
+            li.book.col-lg-3.col-md-4.col-sm-6
+                span.book-thumbnail
+                    - var thumbnail = value.get("thumbnail");
+                    if(thumbnail)
+                        img(src='images/#{value.get("thumbnail")}')
+                    else
+                        img(src='images/book.png')                        
+                div.book-info
+                    div
+                        b 
+                            a(href='upload/#{value.id}') #{value.get('title')}
+                    div 
+                        i Author: #{value.get('author')}
+                    div
+                        i=value.get('description')
+                    div.book-operator
+                        a(href='upload/#{value.id}') Update
+                        span &nbsp;|&nbsp;
+                        a(href='remove/#{value.id}') Remove

@@ -6,3 +6,35 @@ body {
 a {
   color: #00B7FF;
 }
+.book-list{
+    list-style-type: none;
+}
+.book {
+    height: 120px;
+    /*margin: 5px;*/
+    position: relative;
+}
+.book .book-thumbnail{
+    width: 75px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.book .book-thumbnail img{
+    height: 100%;
+    width: 100%;
+}
+.book-info {
+    position: absolute;
+    top: 0px;
+    left: 80px;
+    display: inline-block;
+    height: 100%;
+    width: 100;
+    /*margin: 5px;*/
+}
+.book-info .book-operator{
+    position: absolute;
+    bottom: 20px;
+}

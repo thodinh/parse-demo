@@ -27,7 +27,7 @@ app.set('view engine', 'jade');
 
 var Parse = require('parse/node').Parse;
 Parse.initialize('appId', 'javascriptKey', 'masterKey');
-Parse.serverURL = 'http://localhost:3000/parse'
+Parse.serverURL = 'http://localhost:3000/parse';
 
 global.Parse = Parse;
 
@@ -38,6 +38,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/', routes);
 app.use('/users', users);

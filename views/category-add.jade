@@ -11,4 +11,7 @@ block content
         div.form-group
             label Description
             textarea.form-control(placeholder='Category name', name='categoryDescription') #{categoryDescription}
+        div.form-group
+            label Thumbnail
+            input(type='file', name='categoryThumbnail')
         button.btn.btn-default.pull-right Create
