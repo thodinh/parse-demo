@@ -1,0 +1,15 @@
+extend ../layout
+
+block content
+    h3 Register new account
+    form(method='post', action='/users/register')
+        div.form-group
+            label Email
+            input(readonly).form-control(name='email', value=email)
+        div.form-group
+            label Display Name
+            input.form-control(name='displayName', value=displayName)
+        button.btn.btn-default.pull-right Save
+        - 
+        if isError
+            span.alert.alert-danger #{errorMessage}

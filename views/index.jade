@@ -4,7 +4,7 @@ block content
     h4 Bookshelf online 
     hr
     ul.book-list.row
-        each value, index in results
+        each value, index in results || []
             li.book.col-lg-3.col-md-4.col-sm-6
                 span.book-thumbnail
                     - var thumbnail = value.get("thumbnail");
@@ -24,3 +24,4 @@ block content
                         a(href='upload/#{value.id}') Update
                         span &nbsp;|&nbsp;
                         a(href='remove/#{value.id}') Remove
+    

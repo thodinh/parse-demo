@@ -7,7 +7,7 @@ block content
     h4 List of book category
     hr
     ul
-        each val in categoryList
+        each val in categoryList || []
             li 
                 div 
                     b= val.get('name')

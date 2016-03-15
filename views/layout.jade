@@ -30,11 +30,21 @@ html
                             button.btn.btn-default Search
                 ul.nav.navbar-nav.navbar-right
                     li.dropdown
-                        a.dropdown-toggle(href='#', data-toggle='dropdown') Register
-                            span.caret
+                        -
+                        if !user 
+                            a.dropdown-toggle(href='#', data-toggle='dropdown') Register
+                                span.caret
+                        else 
+                            a.dropdown-toggle(href='#', data-toggle='dropdown') Howdy, #{user.displayName}
+                                span.caret
                         ul.dropdown-menu
-                            li
-                                a(href='/login') Login
+                            -
+                            if !user
+                                li
+                                    a(href='#{loginUrl}') Login
+                            else
+                                li
+                                    a(href='/users/logout') Logout
                             li
                                 a(href='/settings/book-category') Setting
     

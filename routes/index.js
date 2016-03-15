@@ -1,17 +1,31 @@
+/* global Parse*/
+/* global loginUrl*/
 var express = require('express');
+var google = require('googleapis');
 var router = express.Router();
 var multer  = require('multer');
 var upload = multer({dest: './uploads/'});
 var configUpload = upload.fields([{ name: 'bookFile', maxCount: 1 }, { name: 'thumbnail', maxCount: 1 }]);
+var plus = google.plus('v1');
+var session = require('express-session');
+
+router.get('/*', function(req, res, next) {
+    res.locals.user = session.user;
+    console.log('everything is pass here');
+    next();
+});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var Book = Parse.Object.extend('Book');
     var query = new Parse.Query(Book);
     query.find({
         success: function(results) {
-            res.render('index', { title: 'Bookshelf', results: results });
+            res.render('index', { title: 'Bookshelf', results: results});
         },
         error: function(error) {
+            console.log(error)
+            res.render('index', { title: 'Bookshelf'});
             // error is an instance of Parse.Error.
         }
     });
@@ -20,7 +34,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/about', function (req, res, next) {
     res.render('about', {title: 'About'});
-})
+});
 
 router.get('/upload', function(req, res, next) {
     var category = Parse.Object.extend('Category');
@@ -106,6 +120,7 @@ router.post('/category/add', function(req, res, next) {
             success: function(rs) {
                 console.log('Created category');
             }, error: function(rs, error) {
+                console.log(error);
                 console.log('Failed to create category');
             }
         });

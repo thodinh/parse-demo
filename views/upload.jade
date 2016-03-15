@@ -20,7 +20,7 @@ block content
         div.form-group
             label Category
             select.form-control(name='categoryId')
-                each val in categoryList
+                each val in categoryList || []
                     option(value=val.id) #{val.get('name')}
                 option(value='0', selected) Others  
         div.form-group
