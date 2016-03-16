@@ -53,7 +53,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/images', express.static('./uploads'));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 app.use(session({secret: '1234567890QWERTY'}));
 
@@ -63,12 +63,17 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user;
+  next();
+});
+
 app.use('/', routes);
 app.use('/users', users);
-app.use('/scripts', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js/')));
-app.use('/scripts', express.static(path.join(__dirname, 'node_modules/jquery/dist/')));
-app.use('/scripts', express.static(path.join(__dirname, 'node_modules/angular/')));
-app.use('/stylesheets', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css/')));
+app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist/')));
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/')));
+app.use('/angularjs', express.static(path.join(__dirname, 'node_modules/angular/')));
+app.use('/images', express.static(path.join(__dirname, 'uploads/')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -3,7 +3,8 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
+    // link(rel='stylesheet', href='/bootstrap/css/bootstrap-theme.css')
   body
     nav.navbar.navbar-default
         div.container-fluit
@@ -17,8 +18,10 @@ html
                 ul.nav.navbar-nav
                     li
                         a(href='/') Home
-                    li
-                        a(href='/upload') Upload
+                    - 
+                    if user
+                        li
+                            a(href='/upload') Upload
                     li
                         a(href='/category') Category
                     li
@@ -29,28 +32,38 @@ html
                         span.input-group-btn
                             button.btn.btn-default Search
                 ul.nav.navbar-nav.navbar-right
-                    li.dropdown
-                        -
-                        if !user 
-                            a.dropdown-toggle(href='#', data-toggle='dropdown') Register
+                    -
+                    if !user
+                        li
+                            a(href=loginUrl) Login
+                    else 
+                        li
+                            a.dropdown-toggle(href='#', data-toggle='dropdown') Howdy, #{user.displayName}  
+                    -
+                    if user      
+                        li.dropdown
+                            a.dropdown-toggle(href='#', data-toggle='dropdown')
                                 span.caret
-                        else 
-                            a.dropdown-toggle(href='#', data-toggle='dropdown') Howdy, #{user.displayName}
-                                span.caret
-                        ul.dropdown-menu
-                            -
-                            if !user
-                                li
-                                    a(href='#{loginUrl}') Login
-                            else
-                                li
-                                    a(href='/users/logout') Logout
-                            li
-                                a(href='/settings/book-category') Setting
-    
+                            ul.dropdown-menu
+                                    li
+                                        a(href='/users/logout') Logout
+                                    li
+                                        a(href='/settings/book-category') Setting
+    -
+    if error
+        div.alert.alert-danger.alert-dismissible.fade.in
+            button.close(data-dismiss="alert")
+                span &times;
+            span=error.message
+    else if info
+        div.alert.alert-success.alert-dismissible.fade.in
+            button.close(data-dismiss="alert")
+                span &times;
+            span= info.message
+        
     block content
     
-    script(src='/scripts/jquery.js')
-    script(src='/scripts/bootstrap.js')
-    script(src='/scripts/angular.js')
+    script(src='/jquery/jquery.js')
+    script(src='/bootstrap/js/bootstrap.js')
+    script(src='/angularjs/angular.js')
     script(src='/scripts/app.js')

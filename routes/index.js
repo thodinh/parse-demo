@@ -9,12 +9,6 @@ var configUpload = upload.fields([{ name: 'bookFile', maxCount: 1 }, { name: 'th
 var plus = google.plus('v1');
 var session = require('express-session');
 
-router.get('/*', function(req, res, next) {
-    res.locals.user = session.user;
-    console.log('everything is pass here');
-    next();
-});
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var Book = Parse.Object.extend('Book');
@@ -89,7 +83,14 @@ router.post('/upload', configUpload, function(req, res, next) {
 });
 
 router.get('/upload/:id', function(req, res, next) {
-    res.redirect('/about');
+    var Book = Parse.Object.extend('Book');
+    var book = new Book();
+    var query = new Parse.Query(Book);
+    console.log(req.params.id);
+    query.get(req.params.id).then(function(bookRs){
+        console.log('get book ok');
+        res.render('upload', bookRs);
+    });
 });
 
 router.get('/category', function(req, res, next) {
@@ -129,6 +130,7 @@ router.post('/category/add', function(req, res, next) {
 });
 
 router.get('/file/:id', function(req, res, next) {
+    console.log(__dirname + '/../uploads/' + req.params.id);
     res.sendFile(__dirname + '/../uploads/' + req.params.id);
 })
 
